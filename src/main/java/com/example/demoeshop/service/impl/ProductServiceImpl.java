@@ -25,7 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Autowired
-    public ProductServiceImpl(BasketService basketService, ProductRepository productRepository,
+    public ProductServiceImpl(BasketService basketService,
+                              ProductRepository productRepository,
                               UserService userService) {
         this.basketService = basketService;
         this.productRepository = productRepository;

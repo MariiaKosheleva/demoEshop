@@ -23,7 +23,8 @@ public class BasketServiceImpl implements BasketService {
     private final UserService userService;
 
     @Autowired
-    public BasketServiceImpl(BasketRepository basketRepository, ProductRepository productRepository,
+    public BasketServiceImpl(BasketRepository basketRepository,
+                             ProductRepository productRepository,
                              UserService userService) {
         this.basketRepository = basketRepository;
         this.productRepository = productRepository;
