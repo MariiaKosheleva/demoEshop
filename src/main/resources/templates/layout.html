@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:fragment="layout(title, content)">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title th:replace="${title}">MKOSHA</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+<body class="d-flex flex-column h-100">
+<style>
+    .btn-outline-danger:hover .text-danger {
+        color: #fff !important;
+    }
+
+    .black-btn {
+        color: #fff !important;
+        background-image: linear-gradient(to right, #000000, #212529, #000000);
+        border: none;
+    }
+
+    .btn {
+        border-radius: 5px;
+    }
+
+    .btn-gradient {
+        background-size: 300% 100%;
+
+        moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out !important;
+    }
+
+    .btn-gradient:hover {
+        background-position: 100% 0;
+        moz-transition: all .4s ease-in-out;
+        -o-transition: all .4s ease-in-out;
+        -webkit-transition: all .4s ease-in-out;
+        transition: all .4s ease-in-out;
+    }
+
+    .black-btn-outline {
+        border: 1px solid #212529 !important;
+        color: #212529 !important;
+    }
+
+    .black-btn-outline:hover {
+        background: #212529;
+        color: #fff !important;
+    }
+
+    body {
+        min-height: 100vh;
+    }
+
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 99999999;
+        background: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .categories .nav-link {
+        color: #111;
+        font-weight: 600;
+        transition: .2s
+    }
+
+    .categories .nav-link:hover {
+        color: purple;
+        padding-left: 12px !important
+    }
+
+    .card {
+        transition: .2s;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.06);
+    }
+
+    .card-title {
+        font-size: 16px;
+        font-weight: 700;
+        transition: .2s
+    }
+
+    .card-title:hover {
+        color: purple;
+    }
+</style>
+<nav class="navbar navbar-expand-lg bg-light position-fixed top-0 start-0 w-100" style="z-index: 99999;">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">MKOSHA</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/products}">Catalog</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')">
+                    <a class="nav-link" th:href="@{/users}">Users</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <a class="nav-link" th:href="@{/basket}">Basket</a>
+                </li>
+            </ul>
+            <form method="get" th:action="@{/products/search}" class="d-flex mb-0 me-3" role="search">
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="title">
+                <button class="btn black-btn-outline" type="submit">Search</button>
+            </form>
+            <div class="dropdown profile-menu" sec:authorize="isAuthenticated()">
+                <div class="dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown"
+                     aria-expanded="false">
+                    <p class="mb-0" sec:authentication="principal.username"></p>
+                </div>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" th:href="@{/users/profile}">Profile</a></li>
+                    <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
+            <a role="button" sec:authorize="!isAuthenticated()"
+               class="btn btn-gradient black-btn" th:href="@{/login}">Login</a>
+            <a role="button" sec:authorize="!isAuthenticated()"
+               class="btn btn-gradient black-btn ms-2" th:href="@{/users/registration}">Register</a>
+        </div>
+    </div>
+</nav>
+<section th:replace="${content}">
+</section>
+<footer class="py-3 bg-black bg-gradient mt-auto">
+    <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <div class="col-md-4 d-flex align-items-center">
+            <span class="mb-3 mb-md-0 text-white">© 2022 demoEShop - Mariia Kosheleva</span>
+        </div>
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3">
+                <a class="text-white" href="tel:+380996357961">
+                    <i class="bi bi-telephone"></i>
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-white" href="https://t.me/mkoshaa" target="_blank">
+                    <i class="bi bi-send"></i>
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-white" href="mailto:mariia.koshelevaa@gmail.com">
+                    <i class="bi bi-envelope-heart"></i>
+                </a>
+            </li>
+            <li class="ms-3">
+                <a class="text-white" href="https://www.linkedin.com/in/mariia-kosheleva" target="_blank">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>
+<div id="preloader">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+            crossorigin="anonymous"></script>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#preloader').fadeOut();
+    })
+</script>
+</body>
+</html>

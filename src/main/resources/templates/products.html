@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:replace="layout :: layout(~{::title}, ~{::section})">
+<head>
+    <title>MKOSHA</title>
+</head>
+<body>
+<section>
+    <div class="container py-5">
+        <div class="row py-5">
+            <div class="col-12 col-md-4 col-lg-3">
+                <nav class="bg-light py-3 px-4 categories rounded">
+                    <p class="fw-bold text-black fs-5">Categories</p>
+                    <ul class="nav flex-column my-2 p-0">
+                        <li class="nav-item" th:each="cat : ${categories}">
+                            <a class="nav-link ps-0" aria-current="page"
+                               th:href="@{/products/productsByCategory/{id}(id=${cat.id})}" th:text="${cat.title}">
+                                Cakes
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="dropdown mt-3 bg-light py-3 px-4 rounded">
+                    <div class="dropdown-toggle d-flex align-items-center" type="button" data-bs-toggle="dropdown"
+                         aria-expanded="false">
+                        <p class="mb-0">Sort by</p>
+                    </div>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/products">(Default)</a></li>
+                        </li>
+                        <li><a class="dropdown-item" href="/products/?sort=descending">Sort by price:
+                            descending</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/products/?sort=ascending">Sort by price:
+                            ascending</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/products/?sort=a-z">Sort by name: A-Z</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/products/?sort=z-a">Sort by name: Z-A</a>
+                        </li>
+                    </ul>
+                </div>
+                <a role="button" sec:authorize="hasAnyAuthority('ADMIN')" class="btn black-btn-outline mt-3 w-100"
+                   th:href="@{/products/new}">Add new</a>
+            </div>
+            <div class="col-12 col-md-8 col-lg-9">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+                    <div class="col mb-4" th:each="product : ${products}">
+                        <div class="card border-none">
+                            <img th:src="${product.image}" class="card-img-top" alt="product image">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.title}"></h5>
+                                <p class="text-muted" th:text="${product.price + '$'}"></p>
+                                <div class="d-flex justify-content-between">
+                                    <a sec:authorize="hasAnyAuthority('ADMIN', 'USER')"
+                                       th:href="@{/products/{id}/basket(id=${product.id})}"
+                                       class="btn black-btn-outline">Add to basket</a>
+
+                                    <a role="button" class="btn black-btn-outline"
+                                       sec:authorize="hasAnyAuthority('ADMIN')"
+                                       th:href="@{/products/edit/{id}(id=${product.id})}">Edit</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

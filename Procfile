@@ -1,0 +1,1 @@
+web: java -jar target/demoEShop-0.0.1-SNAPSHOT

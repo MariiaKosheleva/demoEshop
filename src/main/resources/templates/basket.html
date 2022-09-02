@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:replace="layout :: layout(~{::title}, ~{::section})">
+<head>
+    <title>MKOSHA</title>
+</head>
+<body>
+<section>
+    <div class="container py-5">
+        <section class="py-5">
+            <h2 class="h5 text-uppercase mb-4">Shopping cart</h2>
+            <div class="row">
+                <div class="col-lg-8 mb-4 mb-lg-0">
+                    <!-- CART TABLE-->
+                    <div class="table-responsive mb-4">
+                        <table class="table text-nowrap">
+                            <thead class="bg-light">
+                            <tr>
+                                <th class="border-0 p-3" scope="col"><strong
+                                        class="text-sm text-uppercase">Product</strong>
+                                </th>
+                                <th class="border-0 p-3" scope="col"><strong
+                                        class="text-sm text-uppercase">Price</strong>
+                                </th>
+                                <th class="border-0 p-3" scope="col"><strong
+                                        class="text-sm text-uppercase">Quantity</strong></th>
+                                <th class="border-0 p-3" scope="col"><strong
+                                        class="text-sm text-uppercase">Total</strong>
+                                </th>
+                                <th class="border-0 p-3" scope="col"><strong class="text-sm text-uppercase"></strong>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="border-0">
+                            <tr th:each="detail : ${basket.basketDetails}">
+                                <th class="ps-0 py-3 border-light" scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <a class="d-block">
+                                            <img style="object-fit: cover; height: 80px; width: 80px;"
+                                                 th:src="${detail.image}"/>
+                                        </a>
+                                        <div class="ms-3">
+                                            <span class="fw-medium" th:text="${detail.title}">Cake</span>
+                                        </div>
+                                    </div>
+                                </th>
+                                <td class="p-3 align-middle border-light">
+                                    <p class="mb-0 small" th:text="${detail.price + '$'}">250.0</p>
+                                </td>
+                                <td class="p-3 align-middle border-light">
+                                    <div class="d-flex align-items-center justify-content-between px-3">
+                                    <span class="small text-uppercase text-gray headings-font-family"
+                                          th:text="${detail.amount}">2</span>
+                                    </div>
+                                </td>
+                                <td class="p-3 align-middle border-light">
+                                    <p class="mb-0 small" th:text="${detail.sum + '$'}">250.0</p>
+                                </td>
+                                <td class="p-3 align-middle border-light">
+                                    <div class="d-flex align-items-stretch">
+                                        <a role="button" class="btn btn-outline-danger"
+                                           th:href="@{/basket/removeOneUnitOfProduct/{id}(id=${detail.getProductId()})}">
+                                            Reduce quantity by one
+                                        </a>
+                                        <a role="button" class="btn btn-outline-danger ms-2 d-flex align-items-center"
+                                           th:href="@{/basket/removeAllUnitsOfProduct/{id}(id=${detail.getProductId()})}">
+                                            <i class="bi bi-trash text-danger"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- ORDER TOTAL-->
+                <div class="col-lg-4">
+                    <div class="card border-0 rounded-0 p-lg-4 bg-light">
+                        <div class="card-body">
+                            <h5 class="text-uppercase mb-4">Cart total</h5>
+                            <ul class="list-unstyled mb-0">
+                                <li class="d-flex align-items-center justify-content-between mb-4"><strong
+                                        class="text-uppercase small font-weight-bold">Total</strong>
+                                    <span th:text="${basket.sum + '$'}">250.0</span></li>
+                                <a role="button" class="btn black-btn btn-gradient mt-2 w-100"
+                                   th:href="@{/products}">Continue shopping</a>
+                                <button class="btn black-btn-outline w-100 mt-2"
+                                        data-bs-toggle="modal" data-bs-target="#motiv">Get motivation
+                                </button>
+                                <a role="button" class="btn btn-outline-danger w-100 mt-2"
+                                   th:href="@{/basket/clear}">
+                                    Clear the basket
+                                </a>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal" id="motiv" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center d-flex align-items-center justify-content-center">
+                    <img style="max-width: 560px; width: 100%; height: auto; object-fit: contain"
+                         src="https://poster.keepcalmandposters.com/961965.png">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

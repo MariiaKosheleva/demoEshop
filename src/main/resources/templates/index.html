@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
+      th:replace="layout :: layout(~{::title}, ~{::section})">
+<head>
+    <title>MKOSHA</title>
+</head>
+<body>
+<section>
+    <div class="main-block d-flex align-items-center justify-content-center"
+         style="background: url('https://wallpaperaccess.com/full/1986106.jpg') center center no-repeat;
+            background-size: cover; min-height: 100vh; height: auto">
+        <div class="container p-3">
+            <div class="content text-center">
+                <h1 class="text-white">MKOSHA SWEETS</h1>
+                <a role="button" class="btn black-btn btn-gradient btn-lg mt-3" th:href="@{/products}">Let`s go to die
+                    from the sugar level</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
