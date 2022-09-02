@@ -87,7 +87,6 @@ public class UserController {
         userService.update(dto);
         return "redirect:/users/profile";
     }
-
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/{id}/delete")
     public String deleteUser(@PathVariable("id") Long userId) {
