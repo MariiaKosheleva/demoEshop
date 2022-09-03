@@ -12,26 +12,30 @@ import java.net.URISyntaxException;
 public class DataSourceConfig {
     @Bean
     public DataSource postgresDataSource() {
-        String databaseUrl = System.getenv("DATABASE_URL");
-        String dbUrl = "jdbc:postgresql://localhost:5432/demoeshop";
-        String username = "postgres";
-        String password = "mama1101";
 
-        try {
-            URI dbUri = new URI(databaseUrl);
-            dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() +
-                    "?sslmode=require";
-            username = dbUri.getUserInfo().split(":")[0];
-            password = dbUri.getUserInfo().split(":")[1];
-        } catch (URISyntaxException | NullPointerException e) {
-            return null;
+        String dbUrl = System.getenv("DATABASE_URL");
+
+        String url = "jdbc:postgresql://localhost:5432/demoEShop";
+
+        String user = "postgres";
+
+        String pass = "mama1101";
+        if (dbUrl != null) {
+            try {
+                URI dbUri = new URI(dbUrl);
+                url = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+                user = dbUri.getUserInfo().split(":")[0];
+                pass = dbUri.getUserInfo().split(":")[1];
+            } catch (URISyntaxException | NullPointerException e) {
+                return null;
+            }
         }
 
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url(dbUrl);
-        dataSourceBuilder.username(username);
-        dataSourceBuilder.password(password);
+        dataSourceBuilder.url(url);
+        dataSourceBuilder.username(user);
+        dataSourceBuilder.password(pass);
         return dataSourceBuilder.build();
     }
 }
