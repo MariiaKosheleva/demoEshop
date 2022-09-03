@@ -12,7 +12,6 @@ import java.net.URISyntaxException;
 public class DataSourceConfig {
     @Bean
     public DataSource postgresDataSource() {
-
         String dbUrl = System.getenv("DATABASE_URL");
 
         String url = "jdbc:postgresql://localhost:5432/demoEShop";
