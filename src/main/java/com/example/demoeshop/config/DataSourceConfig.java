@@ -16,10 +16,9 @@ public class DataSourceConfig {
         String dbUrl = System.getenv("DATABASE_URL");
 
         String url = "jdbc:postgresql://localhost:5432/demoEShop";
-
         String user = "postgres";
-
         String pass = "mama1101";
+
         if (dbUrl != null) {
             try {
                 URI dbUri = new URI(dbUrl);
