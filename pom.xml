@@ -128,7 +128,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.example.demo-eshop.DemoEShopApplication</mainClass>
+                            <mainClass>com.example.demoeshop.DemoEShopApplication</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
